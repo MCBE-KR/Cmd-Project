@@ -1,0 +1,36 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "cmd:scan_hit",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "is_experimental": false
+        },
+        "component_groups": {
+            "cmd:despawn": {
+                "minecraft:instant_despawn": {}
+            }
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "width": 0,
+                "height": 0
+            }
+        },
+        "events": {
+            "cmd:despawn": {
+                "add": {
+                    "component_groups": [
+                        "cmd:despawn"
+                    ]
+                },
+                "run_command": {
+                    "command": [
+                        "tp 0 0 0"
+                    ]
+                }
+            }
+        }
+    }
+}

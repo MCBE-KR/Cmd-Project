@@ -1,0 +1,111 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.player.detect": {
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"start": "query.is_moving || query.is_sneaking || variable.attack_time || query.is_using_item || query.is_jumping"
+						}
+					]
+				},
+				"start": {
+					"transitions": [
+						{
+							"mobile": "query.scoreboard('control') == 1"
+						},
+						{
+							"window": "query.scoreboard('control') == 2"
+						},
+						{
+							"window": "true"
+						}
+					]
+				},
+				"mobile": {
+					"transitions": [
+						{
+							"mobile_detect": "true"
+						}
+					],
+					"on_entry": [
+						"/tellraw @s {\"rawtext\": [{\"translate\": \"setting.mobile\"}]}"
+					]
+				},
+				"mobile_detect": {
+					"transitions": []
+				},
+				"window": {
+					"transitions": [
+						{
+							"window_detect": "true"
+						}
+					],
+					"on_entry": [
+						"/tellraw @s {\"rawtext\": [{\"translate\": \"setting.window\"}]}"
+					]
+				},
+				"window_detect": {
+					"transitions": [
+						{
+							"mobile": "query.scoreboard('control') == 1"
+						},
+						{
+							"window_skill2": "query.is_using_item && query.is_sneaking && query.get_equipped_item_name == 'skill_a'"
+						},
+						{
+							"window_skill1": "query.is_using_item && query.get_equipped_item_name == 'skill_a'"
+						},
+						{
+							"window_skill4": "query.is_using_item && query.is_sneaking && query.get_equipped_item_name == 'skill_b'"
+						},
+						{
+							"window_skill3": "query.is_using_item && query.get_equipped_item_name == 'skill_b'"
+						}
+					]
+				},
+				"window_skill1": {
+					"transitions": [
+						{
+							"window_detect": "!query.is_using_item"
+						}
+					],
+					"on_entry": [
+						"/function skill/skill1"
+					]
+				},
+				"window_skill2": {
+					"transitions": [
+						{
+							"window_detect": "!query.is_using_item"
+						}
+					],
+					"on_entry": [
+						"/function skill/skill2"
+					]
+				},
+				"window_skill3": {
+					"transitions": [
+						{
+							"window_detect": "!query.is_using_item"
+						}
+					],
+					"on_entry": [
+						"/function skill/skill3"
+					]
+				},
+				"window_skill4": {
+					"transitions": [
+						{
+							"window_detect": "!query.is_using_item"
+						}
+					],
+					"on_entry": [
+						"/function skill/skill4"
+					]
+				}
+			}
+		}
+	}
+}

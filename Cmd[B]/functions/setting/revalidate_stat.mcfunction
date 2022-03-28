@@ -1,0 +1,2 @@
+function setting/revalidate_hp
+function setting/revalidate_mana

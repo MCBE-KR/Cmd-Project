@@ -1,0 +1,2 @@
+execute @p[tag=victim,scores={shield=0}] ~ ~ ~ execute @a[tag=attacker] ~ ~ ~ function damage/execute_damage
+execute @p[tag=victim,scores={shield=1..}] ~ ~ ~ execute @a[tag=attacker] ~ ~ ~ function damage/check_shield

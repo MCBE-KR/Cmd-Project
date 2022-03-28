@@ -1,0 +1,21 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.instant.despawn": {
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"despawn": "true"
+						}
+					]
+				},
+				"despawn": {
+					"on_entry": [
+						"/event entity @s cmd:despawn"
+					]
+				}
+			}
+		}
+	}
+}

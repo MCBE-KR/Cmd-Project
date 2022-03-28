@@ -1,0 +1,91 @@
+{
+    "format_version": "1.14.0",
+    "sound_definitions": {
+        "random.levelup": {
+            "category": "player",
+            "sounds": []
+        },
+        "cmd.break_shield": {
+            "category": "player",
+            "sounds": [
+                {
+                    "name": "sounds/effect/break_shield"
+                }
+            ]
+        },
+        "cmd.j1s1_spawn": {
+            "category": "player",
+            "sounds": [
+                {
+                    "name": "sounds/item/trident/throw1",
+                    "volume": 2
+                }
+            ]
+        },
+        "cmd.j1s1_hit": {
+            "__use_legacy_max_distance": true,
+            "category": "block",
+            "sounds": [
+                {
+                    "name": "sounds/random/glass1",
+                    "volume": 0.5,
+                    "load_on_low_memory": true
+                },
+                {
+                    "name": "sounds/random/glass2",
+                    "volume": 0.5,
+                    "load_on_low_memory": true
+                },
+                {
+                    "name": "sounds/random/glass3",
+                    "volume": 0.5,
+                    "load_on_low_memory": true
+                }
+            ]
+        },
+        "cmd.j1s2_damage": {
+            "category": "player",
+            "sounds": [
+                {
+                    "name": "sounds/effect/ice_break"
+                }
+            ]
+        },
+        "cmd.j1s3": {
+            "category": "player",
+            "sounds": [
+                {
+                    "name": "sounds/j1/s3",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "cmd.j1s4": {
+            "category": "player",
+            "sounds": [
+                {
+                    "name": "sounds/j1/s4",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "cmd.j2s1": {
+            "category": "player",
+            "sounds": [
+                {
+                    "name": "sounds/j2/s1",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "cmd.j2s2": {
+            "category": "player",
+            "sounds": [
+                {
+                    "name": "sounds/j2/s2",
+                    "volume": 0.5
+                }
+            ]
+        }
+    }
+}

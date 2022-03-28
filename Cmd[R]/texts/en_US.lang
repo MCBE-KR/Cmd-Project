@@ -1,0 +1,17 @@
+﻿pack.name=CMD [Resource]
+pack.des=Creator : Namsic
+
+item.cmd:skill_a=Skill 1&2
+item.cmd:skill_b=Skill 3&4
+
+setting.mobile=[설정] Control: Mobile
+setting.window=[설정] Control: Window
+
+kill=§c§lKill!
+deatrh=§c§lYOU DIED...
+
+skill.on=Skill %s's cooldown is over
+skill.fail.cc=§cCan't use skill now
+skill.fail.cool=§cSkill %s Cool: [§l%s.%s/%s§r§c]
+skill.fail.mana=§bSkill %s Mana: [§l%s/%s§r§b]
+skill.fail.invalid_target=§cInvalid target to use skill

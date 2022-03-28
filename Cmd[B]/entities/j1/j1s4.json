@@ -1,0 +1,51 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "cmd:j1s4",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "is_experimental": false,
+            "scripts": {
+                "animate": [
+                    "tick"
+                ]
+            },
+            "animations": {
+                "tick": "controller.animation.j1s4.tick"
+            }
+        },
+        "component_groups": {
+            "cmd:despawn": {
+                "minecraft:instant_despawn": {}
+            }
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "width": 0,
+                "height": 0
+            }
+        },
+        "events": {
+            "cmd:despawn": {
+                "add": {
+                    "component_groups": [
+                        "cmd:despawn"
+                    ]
+                },
+                "run_command": {
+                    "command": [
+                        "tp 0 0 0"
+                    ]
+                }
+            },
+            "minecraft:entity_spawned": {
+                "run_command": {
+                    "command": [
+                        "function skill/job1/s4_spawn"
+                    ]
+                }
+            }
+        }
+    }
+}

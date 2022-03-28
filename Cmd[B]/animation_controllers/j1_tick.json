@@ -1,0 +1,80 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.j1s1.tick": {
+			"initial_state": "loop1",
+			"states": {
+				"loop1": {
+					"transitions": [
+						{
+							"loop2": "true"
+						}
+					],
+					"on_entry": [
+						"/function skill/job1/s1_tick"
+					]
+				},
+				"loop2": {
+					"transitions": [
+						{
+							"loop1": "true"
+						}
+					],
+					"on_entry": [
+						"/function skill/job1/s1_tick"
+					]
+				}
+			}
+		},
+		"controller.animation.j1s2.tick": {
+			"initial_state": "loop1",
+			"states": {
+				"loop1": {
+					"transitions": [
+						{
+							"loop2": "true"
+						}
+					],
+					"on_entry": [
+						"/function skill/job1/s2_tick"
+					]
+				},
+				"loop2": {
+					"transitions": [
+						{
+							"loop1": "true"
+						}
+					],
+					"on_entry": [
+						"/function skill/job1/s2_tick"
+					]
+				}
+			}
+		},
+		"controller.animation.j1s4.tick": {
+			"initial_state": "loop1",
+			"states": {
+				"loop1": {
+					"transitions": [
+						{
+							"loop2": "true"
+						}
+					],
+					"on_entry": [
+						"/function skill/job1/s4_tick"
+					]
+				},
+				"loop2": {
+					"transitions": [
+						{
+							"loop1": "true"
+						}
+					],
+					"on_entry": [
+						"/function skill/job1/s4_tick"
+					]
+				}
+			}
+		}
+	}
+}

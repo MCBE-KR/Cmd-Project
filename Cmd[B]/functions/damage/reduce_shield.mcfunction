@@ -1,0 +1,1 @@
+playsound random.orb @a[r=20] ~ ~ ~ 1.0 2.0

@@ -1,0 +1,17 @@
+﻿pack.name=커맨드 [리소스팩]
+pack.description=제작자 : 남식
+
+item.cmd:skill_a=스킬 1&2
+item.cmd:skill_b=스킬 3&4
+
+setting.mobile=[설정] 컨트롤: 모바일
+setting.window=[설정] 컨트롤: 윈도우
+
+kill=§c§l킬!
+deatrh=§c§l당신은 사망했습니다...
+
+skill.on=스킬 %s의 쿨타임이 회복되었습니다
+skill.fail.cc=§c현재 스킬 사용이 불가능한 상태입니다
+skill.fail.cool=§c스킬 %s 쿨타임: [§l%s.%s/%s§r§c]
+skill.fail.mana=§b스킬 %s 마나: [§l%s/%s§r§b]
+skill.fail.invalid_target=§c스킬을 사용할 수 없는 대상입니다

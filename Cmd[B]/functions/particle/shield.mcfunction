@@ -1,0 +1,16 @@
+particle cmd:shield0 ~ ~0.7 ~1
+particle cmd:shield1 ~-0.75 ~0.7 ~0.75
+particle cmd:shield2 ~-1 ~0.7 ~
+particle cmd:shield3 ~-0.75 ~0.7 ~-0.75
+particle cmd:shield4 ~ ~0.7 ~-1
+particle cmd:shield5 ~0.75 ~0.7 ~-0.75
+particle cmd:shield6 ~1 ~0.7 ~
+particle cmd:shield7 ~0.75 ~0.7 ~0.75
+particle cmd:shield0 ~ ~0.7 ~-1
+particle cmd:shield1 ~0.75 ~0.7 ~-0.75
+particle cmd:shield2 ~1 ~0.7 ~
+particle cmd:shield3 ~0.75 ~0.7 ~0.75
+particle cmd:shield4 ~ ~0.7 ~1
+particle cmd:shield5 ~-0.75 ~0.7 ~0.75
+particle cmd:shield6 ~-1 ~0.7 ~
+particle cmd:shield7 ~-0.75 ~0.7 ~-0.75
