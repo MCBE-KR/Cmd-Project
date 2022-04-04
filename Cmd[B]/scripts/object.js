@@ -20,9 +20,9 @@ export class LineData {
 		let zDiff = src.z - dst.z
 
 		this.totalDiff = Math.abs(xDiff) + Math.abs(yDiff) + Math.abs(zDiff)
-		this.xDiff = (xDiff * (xDiff / this.totalDiff)) / 100
-		this.yDiff = (yDiff * (yDiff / this.totalDiff)) / 100
-		this.zDiff = (zDiff * (zDiff / this.totalDiff)) / 100
+		this.xDiff = (Math.abs(xDiff) * (xDiff / this.totalDiff)) / 100
+		this.yDiff = (Math.abs(yDiff) * (yDiff / this.totalDiff)) / 100
+		this.zDiff = (Math.abs(zDiff) * (zDiff / this.totalDiff)) / 100
 	}
 
 	getDiff(multiplier) {
