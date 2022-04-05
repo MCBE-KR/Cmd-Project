@@ -90,19 +90,12 @@ function showParticle() {
 
 				for (let line of Api.SAVED.get(SaveKey.LINE)) {
 					let diff = line.getDiff(multiplier)
-					let increaseCount = line.totalDiff / multiplier * 100
+					let increaseCount = Math.ceil(line.dist) * Math.round(100 / multiplier)
 					let src = line.src
 
-					console.warn(`Diff: ${diff.x} ${diff.y} ${diff.z}`)
-					console.warn(`Count: ${increaseCount}`)
-
-					for (let i = 0; i <= increaseCount; i++) {
-						console.warn(`Loc: ${src.x + (diff.x * i)} ${src.y + (diff.y * i) + yOffset} ${src.z + (diff.z * i)}`)
-
-						let executable = () => Api.runParticle(particle, src.x + (diff.x * i), src.y + (diff.y * i) + yOffset, src.z + (diff.z * i))
+					for (let i = 0; i < increaseCount; i ++) {
+						let executable = () => Api.runParticle(particle, src.x - (diff.x * i), src.y - (diff.y * i) + yOffset, src.z - (diff.z * i))
 						let delay = Math.floor(i * delayMultiplier / particlePerDelay)
-
-						console.warn(delay + " " + i + " " + delayMultiplier + " " + particlePerDelay)
 
 						addTask(delay, executable)
 					}
