@@ -14,15 +14,15 @@ export class LineData {
 	constructor(src, dst) {
 		this.src = src
 		this.dst = dst
-
+		
 		let xDiff = src.x - dst.x
 		let yDiff = src.y - dst.y
 		let zDiff = src.z - dst.z
 
-		this.totalDiff = Math.abs(xDiff) + Math.abs(yDiff) + Math.abs(zDiff)
-		this.xDiff = (Math.abs(xDiff) * (xDiff / this.totalDiff)) / 100
-		this.yDiff = (Math.abs(yDiff) * (yDiff / this.totalDiff)) / 100
-		this.zDiff = (Math.abs(zDiff) * (zDiff / this.totalDiff)) / 100
+		this.dist = Math.sqrt(Math.abs(xDiff)**2)+ (Math.abs(yDiff)**2) + (Math.abs(zDiff)**2)
+		this.xDiff = (xDiff / this.dist)/100
+		this.yDiff = (yDiff / this.dist)/100
+		this.zDiff = (zDiff / this.dist)/100
 	}
 
 	getDiff(multiplier) {
