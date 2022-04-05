@@ -8,7 +8,7 @@ tag @a remove dst
 scoreboard players set @s param1 222
 scoreboard players set @s param2 20
 scoreboard players set @s param3 1
-scoreboard players set @s param4 2
+scoreboard players set @s param4 6
 scoreboard players set @s param5 90
 
 tag @s add executor
