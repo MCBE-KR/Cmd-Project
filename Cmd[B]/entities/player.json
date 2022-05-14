@@ -16,9 +16,6 @@
             }
         },
         "components": {
-            "minecraft:experience_reward": {
-                "on_death": "Math.Min(query.player_level * 7, 100)"
-            },
             "minecraft:type_family": {
                 "family": [
                     "player"
@@ -58,7 +55,7 @@
                 "total_supply": 15,
                 "suffocate_time": -1,
                 "inhale_time": 3.75,
-                "generates_bubbles": false
+                "generates_bubbles": true
             },
             "minecraft:nameable": {
                 "always_show": true,
@@ -70,7 +67,22 @@
                 "is_pushable_by_piston": true
             },
             "minecraft:conditional_bandwidth_optimization": {},
-            "minecraft:scaffolding_climber": {}
+            "minecraft:scaffolding_climber": {},
+            "minecraft:rideable": {
+                "seat_count": 100,
+                "family_types": [
+                    "ride"
+                ],
+                "pull_in_entities": false,
+                "seats": [
+                    {
+                        "position": [0, -0.9, 0],
+                        "min_rider_count": 0,
+                        "max_rider_count": 100,
+                        "lock_rider_rotation": 0
+                    }
+                ]
+            }
         },
         "events": {}
     }

@@ -2,25 +2,19 @@
 scoreboard objectives add control dummy "컨트롤 타입"
 
 #Game
-scoreboard objectives add airbon dummy "에어본"
-scoreboard objectives add airbon_lv dummy "에어본 레벨"
 scoreboard objectives add stun dummy "기절"
 scoreboard objectives add silence dummy "침묵"
 
+scoreboard objectives add heal_reduce dummy "치유 감소"
+scoreboard objectives add heal_reduce_lv dummy "치유 감소 레벨"
 scoreboard objectives add fire dummy "화염"
 scoreboard objectives add fire_lv dummy "화염 레벨"
 scoreboard objectives add poison dummy "독"
 scoreboard objectives add poison_lv dummy "독 레벨"
-scoreboard objectives add slow dummy "둔화"
-scoreboard objectives add slow_lv dummy "둔화 레벨"
-scoreboard objectives add heal_reduce dummy "치유 감소"
-scoreboard objectives add heal_reduce_lv dummy "치유 감소 레벨"
 
 scoreboard objectives add invisible dummy "투명화"
 scoreboard objectives add invincible dummy "무적"
 scoreboard objectives add shield dummy "실드"
-scoreboard objectives add speed dummy "신속"
-scoreboard objectives add speed_lv dummy "신속 레벨"
 scoreboard objectives add cc_resist dummy "CC 저항"
 scoreboard objectives add cc_resist_lv dummy "CC 저항 레벨"
 

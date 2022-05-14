@@ -19,7 +19,7 @@
 							"window": "query.scoreboard('control') == 2"
 						},
 						{
-							"window": "true"
+							"window_detect": "true"
 						}
 					]
 				},

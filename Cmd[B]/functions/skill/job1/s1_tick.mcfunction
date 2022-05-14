@@ -6,7 +6,7 @@ tp ^ ^ ^0.35 true
 tp ^ ^ ^0.35 true
 
 function get_nearest_e
-execute @s ~ ~-0.9 ~ tag @p[tag=nearest,r=1.4] add victim
+execute @s ~ ~-0.9 ~ tag @p[tag=nearest, r=1.4] add victim
 tag @a remove nearest
 
 tag @s add j1s1

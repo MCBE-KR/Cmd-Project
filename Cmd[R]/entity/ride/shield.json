@@ -1,0 +1,31 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "cmd:shield",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/shield"
+            },
+            "geometry": {
+                "default": "geometry.shield"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ],
+            "animations": {
+                "spawn": "animation.shield.spawn",
+                "despawn": "animation.shield.despawn",
+                "idle": "animation.shield.idle"
+            },
+            "scripts": {
+                "animate": [
+                    "spawn",
+                    { "idle": "query.anim_time > 0.5" }
+                ]
+            }
+        }
+    }
+}

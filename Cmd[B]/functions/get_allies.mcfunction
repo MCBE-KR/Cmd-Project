@@ -1,2 +1,5 @@
-execute @s[scores={team=1}] ~ ~ ~ tag @a[tag=target, scores={team=2}] remove target
-execute @s[scores={team=2}] ~ ~ ~ tag @a[tag=target, scores={team=1}] remove target
+tag @s add self
+execute @a[tag=target] ~ ~ ~ scoreboard players operation @s temp1 = @s team
+execute @a[tag=target] ~ ~ ~ scoreboard players operation @s temp1 -= @p[tag=self] team
+tag @a[tag=target, scores={temp1=!0}] remove target
+tag @s remove self

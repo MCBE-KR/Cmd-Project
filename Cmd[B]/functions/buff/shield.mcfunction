@@ -1,5 +1,3 @@
-function particle/shield
-
 scoreboard players add @s shield -2
 scoreboard players add @s[scores={shield=500..}] shield -2
 scoreboard players add @s[scores={shield=1000..}] shield -2

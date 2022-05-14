@@ -1,4 +1,4 @@
-execute @p[tag=victim] ~ ~ ~ summon cmd:hit ~ ~1 ~
+damage @p[tag=victim] 1 entity_attack
 
 scoreboard players operation @p[tag=victim] hp -= @s param1
 scoreboard players operation @s damaged += @s param1

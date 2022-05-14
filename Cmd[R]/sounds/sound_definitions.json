@@ -2,11 +2,11 @@
     "format_version": "1.14.0",
     "sound_definitions": {
         "random.levelup": {
-            "category": "player",
+            "category": "ui",
             "sounds": []
         },
         "cmd.break_shield": {
-            "category": "player",
+            "category": "ui",
             "sounds": [
                 {
                     "name": "sounds/effect/break_shield"
@@ -14,7 +14,7 @@
             ]
         },
         "cmd.j1s1_spawn": {
-            "category": "player",
+            "category": "ui",
             "sounds": [
                 {
                     "name": "sounds/item/trident/throw1",
@@ -24,7 +24,7 @@
         },
         "cmd.j1s1_hit": {
             "__use_legacy_max_distance": true,
-            "category": "block",
+            "category": "ui",
             "sounds": [
                 {
                     "name": "sounds/random/glass1",
@@ -44,7 +44,7 @@
             ]
         },
         "cmd.j1s2_damage": {
-            "category": "player",
+            "category": "ui",
             "sounds": [
                 {
                     "name": "sounds/effect/ice_break"
@@ -52,7 +52,7 @@
             ]
         },
         "cmd.j1s3": {
-            "category": "player",
+            "category": "ui",
             "sounds": [
                 {
                     "name": "sounds/j1/s3",
@@ -70,7 +70,7 @@
             ]
         },
         "cmd.j2s1": {
-            "category": "player",
+            "category": "ui",
             "sounds": [
                 {
                     "name": "sounds/j2/s1",
@@ -79,10 +79,37 @@
             ]
         },
         "cmd.j2s2": {
-            "category": "player",
+            "category": "ui",
             "sounds": [
                 {
                     "name": "sounds/j2/s2",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "cmd.j2s3": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/j2/s3",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "cmd.j2s3_sec": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/j2/s3_sec",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "cmd.j2s3_start": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/j2/s3_start",
                     "volume": 0.5
                 }
             ]

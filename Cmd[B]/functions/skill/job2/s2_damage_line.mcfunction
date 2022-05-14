@@ -11,5 +11,7 @@ scoreboard players set @s param4 3
 scoreboard players set @s param5 90
 
 tag @s add executor
+tag @s add show_line
 function show_particle
+tag @s remove show_line
 tag @s remove executor

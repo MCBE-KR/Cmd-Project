@@ -1,0 +1,37 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.shield.spawn": {
+			"animation_length": 0.5,
+			"bones": {
+				"bone": {
+					"scale": {
+						"0.0": [0, 0, 0],
+						"0.5": [1, 1, 1]
+					}
+				}
+			}
+		},
+		"animation.shield.despawn": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.5,
+			"bones": {
+				"bone": {
+					"scale": {
+						"0.0": [1, 1, 1],
+						"0.5": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.shield.idle": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"rotation": [0, "query.life_time * 90", 0],
+					"position": [0, "math.cos(query.life_time * 180) * 0.8", 0]
+				}
+			}
+		}
+	}
+}

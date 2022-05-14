@@ -1,5 +1,3 @@
-scoreboard players set @s job 1
-
 scoreboard players set @s maxhp 2500
 scoreboard players set @s maxmana 200
 
@@ -17,3 +15,5 @@ scoreboard players set @s hp_regen 10
 scoreboard players set @s mana_regen 8
 
 function setting/reset
+
+scoreboard players set @s job 1

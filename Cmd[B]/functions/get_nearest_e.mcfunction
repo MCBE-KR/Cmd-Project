@@ -1,4 +1,6 @@
 tag @a remove nearest
 
-execute @s[scores={team=1}] ~ ~ ~ tag @p[scores={team=2}] add nearest
-execute @s[scores={team=2}] ~ ~ ~ tag @p[scores={team=1}] add nearest
+tag @a add target
+function get_enemies
+tag @p[tag=target] add nearest
+tag @a remove target
