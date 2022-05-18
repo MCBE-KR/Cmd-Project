@@ -1,9 +1,24 @@
 import { world } from "mojang-minecraft";
-import { PLAYER_MAP } from "./api";
+import { PLAYER_MAP, runWorldCommand } from "./api";
+import { addTriableTask } from "./onTickApi";
+
+let requiresInit = true
 
 world.events.playerJoin.subscribe(event => {
 	const player = event.player
 	PLAYER_MAP.set(player.name, player)
+
+	addTriableTask(10, -1, () => {
+		if(requiresInit) {
+			runWorldCommand("function setting/init_score")
+			runWorldCommand("event entity @e cmd:despawn")
+		}
+
+		player.runCommand("scoreboard players set @s control 2")
+		player.runCommand("titleraw @s times 0 1 0")
+	}, false)
+
+	requiresInit = false
 })
 
 world.events.playerLeave.subscribe(event => {

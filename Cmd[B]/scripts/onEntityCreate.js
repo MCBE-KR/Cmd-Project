@@ -2,7 +2,7 @@ import { world, EntityRaycastOptions } from "mojang-minecraft"
 import * as Api from "./api.js"
 import { SaveKey, ScoreChain } from "./api.js"
 import { LineData } from "./object.js"
-import { addTask, addTriableTask } from "./onTick.js"
+import { addTask } from "./onTickApi"
 
 const OVERWORLD = world.getDimension("overworld")
 
@@ -26,13 +26,6 @@ world.events.entityCreate.subscribe(event => {
 	const func = ENTITY_CREATE.get(entityId)
 	if(func) {
 		func()
-	}
-
-	if(entityId === "minecraft:player") {
-		addTriableTask(10, -1, () => {
-			Api.runWorldCommand("function setting/init_score")
-			entity.runCommand("scoreboard players set @s control 2")
-		}, false)
 	}
 })
 
@@ -123,10 +116,7 @@ function checkManaXp() {
 	const players = getExecutors()
 
 	for(const player of players) {
-		Api.getScoreIf(player, "mana", score => {
-			player.runCommand(`xp -1000L @s`)
-			player.runCommand(`xp ${score}L @s`)
-		})
+		Api.checkManaXp(player)
 	}
 }
 

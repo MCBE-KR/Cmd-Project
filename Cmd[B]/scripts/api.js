@@ -13,30 +13,24 @@ export const RIDER = new Map()
 export const DESPAWN_TICK = new Map()
 DESPAWN_TICK.set("cmd:shield", 10)
 
-class EffectData {
-    constructor(name, des, lvName) {
-        this.name = name
-        this.des = des
-        this.lvName = lvName
-    }
-}
-
-function addEffect(list, name, des, hasLv) {
-    const lvName = hasLv ? name + "Lv" : null
-    list.push(new EffectData(name, des, lvName))
-}
-
-export const DEBUFF_LIST = []
-addEffect(DEBUFF_LIST, "stun", "기절", false)
-addEffect(DEBUFF_LIST, "silence", "침묵", false)
-addEffect(DEBUFF_LIST, "heal_reduce", "치유 감소", true)
-addEffect(DEBUFF_LIST, "fire", "화염", true)
-addEffect(DEBUFF_LIST, "poison", "독", true)
-
+export const BUFF_DES = new Map()
 export const BUFF_LIST = []
-addEffect(BUFF_LIST, "invincible", "무적", false)
-addEffect(BUFF_LIST, "invisible", "투명화", false)
-addEffect(BUFF_LIST, "cc_resist", "CC 저항", true)
+
+function addEffect(scoreboard, des, hasLv, isDebuff) {
+    BUFF_DES.set(scoreboard, `${isDebuff ? "§c" : "§b"}${des}`)
+
+    const lvScoreboard = hasLv ? scoreboard + "_lv" : null
+    BUFF_LIST.push({ scoreboard, lvScoreboard, isDebuff })
+}
+
+addEffect("invincible", "무적", false, false)
+addEffect("stun", "기절", false, true)
+addEffect("silence", "침묵", false, true)
+addEffect("invisible", "투명화", false, false)
+addEffect("heal_reduce", "치유 감소", true, true)
+addEffect("cc_resist", "CC 저항", true, false)
+addEffect("fire", "화염", true, true)
+addEffect("poison", "독", true, true)
 
 export function getScore(player, objective) {
     const result = runCommand(player, `scoreboard players test @s ${objective} * *`)
@@ -245,4 +239,11 @@ export function removeAll(arr, values, func) {
     }
 
     return removedList
+}
+
+export function checkManaXp(player) {
+    getScoreIf(player, "mana", score => {
+        player.runCommand(`xp -1000L @s`)
+        player.runCommand(`xp ${score}L @s`)
+    })
 }

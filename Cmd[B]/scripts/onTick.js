@@ -1,81 +1,115 @@
 import { world } from "mojang-minecraft"
-import { PLAYER_MAP, runFunction, runWorldCommand, ScoreChain } from "./api"
+import { BUFF_DES, BUFF_LIST, checkManaXp, getScore, getScoreIf, PLAYER_MAP, runFunction, runWorldCommand, ScoreChain, setScore } from "./api"
 import { isStarted } from "./game"
+import { queue, triableQueue, currentTick, addFailedTriableTask, increaseTick } from "./onTickApi"
 
-const queue = new Map()
-const triableQueue = new Map()
+const OVERWORLD = world.getDimension("overworld")
 
-let currentTick = 0
+function checkBuff(player) {
+	const titles = []
 
-class TriableTask {
-	constructor(tryRate, maxTryCount, task) {
-		this.tryRate = tryRate
-		this.tryCount = 0
-		this.maxTryCount = maxTryCount
-		this.task = task
+	for(const effectData of BUFF_LIST) {
+		const { scoreboard, lvScoreboard, isDebuff } = effectData
+		const score = getScore(player, scoreboard) || 0
+
+		if(score > 0) {
+			let lvScore
+			if(lvScoreboard) {
+				lvScore = getScore(player, lvScoreboard) || 0
+			}
+
+			//버프별 틱 함수(없을 수도 있음 ex: 침묵)
+			let funcName
+			if(isDebuff) {
+				funcName = `debuff/${scoreboard}`
+			} else {
+				funcName = `buff/${scoreboard}`
+			}
+
+			try {
+				player.runCommand(`function ${funcName}`)
+			} catch(ignored) {}
+
+			//버프 액션바 메세지 (최대 8개) (2 틱 마다)
+			if(currentTick % 2 === 0) {
+				return
+			}
+
+			if(titles.length < 8) {
+				const des = BUFF_DES.get(scoreboard)
+
+				let suffix = `§l${score / 20}§r§fs`
+				suffix = " - " + " ".repeat(Math.max(0, 10 - suffix.length)) + suffix
+
+				if(lvScore) {
+					titles.push(`§l${des} §r§f[ §l${lvScore}§r§f ]${suffix}`)
+				} else {
+					titles.push(`§l${des}§r§f${suffix}`)
+				}
+			}
+		}
 	}
 
-	run() {
-		try {
-			this.tryCount++
-			this.task()
-		} catch(e) {
-			return false
+	if(titles.length) {
+		player.runCommand(`title @s actionbar ${titles.join("\n")}`)
+	} else {
+		player.runCommand(`title @s actionbar §f`)
+	}
+}
+
+function reduceCool(player) {
+	//최적화를 위해 getScoreIf 는 반복문을 사용하지 않는다
+	new ScoreChain()
+		.getScoreIf(player, "cool1")
+		.getScoreIf(player, "cool2")
+		.getScoreIf(player, "cool3")
+		.getScoreIf(player, "cool4")
+		.execute((variableMap) => {
+			for(let i = 1; i <= 4; i++) {
+				const scoreboard = `cool${i}`
+				const score = Number(variableMap.get(scoreboard))
+
+				if(score > 0) {
+					if(score === 1) {
+						player.runCommand(`tellraw @s {"rawtext": [{"translate": "skill.on", "with": {"rawtext": [{"text": "${i}"}]}}]}`)
+					}
+
+					setScore(player, scoreboard, score - 1)
+				}
+			}
+		})
+}
+
+function onPlayerTick() {
+	for(const player of PLAYER_MAP.values()) {
+		const shield = getScore(player, "shield") || 0
+		if(shield > 0) {
+			player.runCommand("function buff/shield")
 		}
 
-		return true
+		checkBuff(player)
+		reduceCool(player)
 	}
 }
 
-export function addTask(delay, task) {
-	if(delay === 0) {
-		task()
-		return
+function regenStat() {
+	for(const player of PLAYER_MAP.values()) {
+		player.runCommand(`scoreboard players operation @s hp += @s hp_regen`)
+		player.runCommand(`scoreboard players operation @s mana += @s mana_regen`)
+		runFunction(player, "setting/revalidate_stat")
+		checkManaXp(player)
 	}
-
-	const tick = currentTick + delay
-	const taskList = queue.get(tick) || []
-
-	taskList.push(task)
-	queue.set(tick, taskList)
 }
 
-export function addTriableTask(tryRate, maxTryCount, task, runImmediately) {
-	if(tryRate < 1) {
-		throw new Error("Repeat rate cannot be less than 1")
-	}
-
-	const repeatableTask = new TriableTask(tryRate, maxTryCount, task)
-	if(runImmediately && repeatableTask.run()) {
-		return
-	}
-
-	addFailedTriableTask(repeatableTask)
-}
-
-export function addFailedTriableTask(triableTask) {
-	if(triableTask.tryCount === triableTask.maxTryCount) {
-		return
-	}
-
-	const tick = currentTick + triableTask.tryRate
-	const taskList = triableQueue.get(tick) || []
-
-	taskList.push(triableTask)
-	triableQueue.set(tick, taskList)
-}
-
-function checkEffects(players) {
-	for(const player of players) {
-		new ScoreChain()
-			.getScore(player, "airbon")
-			.getScore(player, "stun")
-			.getScore(player, "silence")
-	}
+function reduceProjectileLife() {
+	try {
+		OVERWORLD.runCommand("scoreboard players add @e[tag=inited, family=projectile] projectile_life -1")
+		OVERWORLD.runCommand("event entity @e[family=projectile, scores={projectile_life=..0}] cmd:despawn")
+	} catch(ignored) {}
 }
 
 world.events.tick.subscribe(() => {
-	currentTick++
+	increaseTick()
 
 	let taskList = queue.get(currentTick)
 	if(taskList instanceof Array) {
@@ -102,16 +136,10 @@ world.events.tick.subscribe(() => {
 		return
 	}
 
-	const players = PLAYER_MAP.values()
+	reduceProjectileLife()
+	onPlayerTick()
 
-	runWorldCommand(`function event/on_global_tick`)
-	checkEffects(players)
-
-	for(const player of players) {
-		runFunction(player, "event/on_tick")
-
-		if(currentTick % 20 === 0) {
-			runFunction(player, "event/on_sec")
-		}
+	if(currentTick % 20 === 0) {
+		regenStat()
 	}
 })
