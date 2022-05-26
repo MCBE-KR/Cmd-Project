@@ -3,6 +3,7 @@ pack.description=제작자 : 남식
 
 item.cmd:skill_a=스킬 1&2
 item.cmd:skill_b=스킬 3&4
+item.cmd:check_form=화면 확인
 
 setting.mobile=[설정] 컨트롤: 모바일
 setting.window=[설정] 컨트롤: 윈도우
@@ -15,3 +16,10 @@ skill.fail.cc=§c현재 스킬 사용이 불가능한 상태입니다
 skill.fail.cool=§c스킬 %s 쿨타임: [§l%s.%s/%s§r§c]
 skill.fail.mana=§b스킬 %s 마나: [§l%s/%s§r§b]
 skill.fail.invalid_target=§c스킬을 사용할 수 없는 대상입니다
+
+form.set_global=화면이 생성되었습니다. 화면이 표시되지 않는 플레이어는 "§l화면 확인§r§f" 아이템을 사용해주세요
+form.unavailable=생성된 화면이 없습니다
+
+form.text.select_team=팀을 선택해주세요
+form.text.team.blue=블루팀
+form.text.team.red=레드팀

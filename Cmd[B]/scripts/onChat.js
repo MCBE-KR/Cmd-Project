@@ -1,6 +1,5 @@
 import { world } from "mojang-minecraft";
-import { runWorldCommand } from "./api";
-import { isStarted, setIsStarted } from "./game";
+import { showStartForm } from "./form";
 
 const PREFIX = "="
 
@@ -38,6 +37,5 @@ world.events.beforeChat.subscribe(event => {
 })
 
 function startGame() {
-	setIsStarted(true)
-	runWorldCommand("say Start!")
+	showStartForm()
 }

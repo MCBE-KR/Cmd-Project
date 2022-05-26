@@ -187,8 +187,6 @@ export function getEffectCommand(effect, rate, amplifier, hideParticle) {
 
 export function getLogString(logs) {
     let log = ""
-    console.warn(JSON.stringify(logs))
-    
     for(let i = 0; i < logs.length; i++) {
         if(i != 0) {
             log += "\n    "
@@ -196,6 +194,8 @@ export function getLogString(logs) {
 
         log += logs[i]
     }
+
+    return log
 }
 
 export function remove(arr, value, func) {

@@ -52,16 +52,16 @@
 							"mobile": "query.scoreboard('control') == 1"
 						},
 						{
-							"window_skill2": "query.is_using_item && query.is_sneaking && query.get_equipped_item_name == 'skill_a'"
+							"window_skill2": "query.is_using_item && query.is_sneaking && query.is_item_name_any('slot.weapon.mainhand', 0, 'cmd:skill_a')"
 						},
 						{
-							"window_skill1": "query.is_using_item && query.get_equipped_item_name == 'skill_a'"
+							"window_skill1": "query.is_using_item && query.is_item_name_any('slot.weapon.mainhand', 0, 'cmd:skill_a')"
 						},
 						{
-							"window_skill4": "query.is_using_item && query.is_sneaking && query.get_equipped_item_name == 'skill_b'"
+							"window_skill4": "query.is_using_item && query.is_sneaking && query.is_item_name_any('slot.weapon.mainhand', 0, 'cmd:skill_b')"
 						},
 						{
-							"window_skill3": "query.is_using_item && query.get_equipped_item_name == 'skill_b'"
+							"window_skill3": "query.is_using_item && query.is_item_name_any('slot.weapon.mainhand', 0, 'cmd:skill_b')"
 						}
 					]
 				},
