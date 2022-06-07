@@ -1,7 +1,8 @@
 import { world } from "mojang-minecraft"
-import { BUFF_DES, BUFF_LIST, checkManaXp, getScore, getScoreIf, PLAYER_MAP, runFunction, runWorldCommand, ScoreChain, setScore } from "./api"
-import { isStarted } from "./game"
-import { queue, triableQueue, currentTick, addFailedTriableTask, increaseTick } from "./onTickApi"
+import { BUFF_DES, BUFF_LIST, checkManaXp, getScore, PLAYER_MAP, runFunction, ScoreChain, setScore } from "./Api"
+import { canceledPlayers, forms, nonResponsePlayers, setCurrentPlayer, showForm } from "./Form"
+import { isStarted } from "./Game"
+import { queue, triableQueue, currentTick, addFailedTriableTask, increaseTick } from "./OnTickApi"
 
 const OVERWORLD = world.getDimension("overworld")
 
@@ -81,7 +82,7 @@ function reduceCool(player) {
 }
 
 function onPlayerTick() {
-	for(const player of PLAYER_MAP.values()) {
+	PLAYER_MAP.valuesEach(player => {
 		const shield = getScore(player, "shield") || 0
 		if(shield > 0) {
 			player.runCommand("function buff/shield")
@@ -89,16 +90,16 @@ function onPlayerTick() {
 
 		checkBuff(player)
 		reduceCool(player)
-	}
+	})
 }
 
 function regenStat() {
-	for(const player of PLAYER_MAP.values()) {
+	PLAYER_MAP.valuesEach(player => {
 		player.runCommand(`scoreboard players operation @s hp += @s hp_regen`)
 		player.runCommand(`scoreboard players operation @s mana += @s mana_regen`)
 		runFunction(player, "setting/revalidate_stat")
 		checkManaXp(player)
-	}
+	})
 }
 
 function reduceProjectileLife() {
@@ -131,6 +132,22 @@ world.events.tick.subscribe(() => {
 
 	triableQueue.delete(currentTick)
 	failedList.forEach(triableTask => addFailedTriableTask(triableTask))
+
+	if(currentTick % 10 === 0) {
+		canceledPlayers.forEach((players, title) => {
+			for(const player of players) {
+				setCurrentPlayer(player)
+				showForm(title, player)
+			}
+		})
+
+		nonResponsePlayers.forEach((players, title) => {
+			for(const player of players) {
+				setCurrentPlayer(player)
+				showForm(title, player)
+			}
+		})
+	}
 
 	if (!isStarted) {
 		return

@@ -1,11 +1,13 @@
 import { world } from "mojang-minecraft";
-import { showStartForm } from "./form";
+import { PLAYER_MAP } from "./Api";
+import { showStartForm } from "./Form";
+import { HashMap } from "./HashMap";
 
 const PREFIX = "="
 
-const MESSAGE = new Map()
+const MESSAGE = new HashMap()
 
-const OP_MESSAGE = new Map()
+const OP_MESSAGE = new HashMap()
 OP_MESSAGE.set("start", startGame)
 
 world.events.beforeChat.subscribe(event => {
@@ -22,20 +24,15 @@ world.events.beforeChat.subscribe(event => {
 	const message = eventMessage.substring(PREFIX.length)
 	
 	if(isOp) {
-		const func = OP_MESSAGE.get(message)
-		
-		if(func) {
-			func()
+		const exists = OP_MESSAGE.getThen(message, (func) => func())
+		if(exists) {
 			return
 		}
 	}
 
-	const func = MESSAGE.get(message)
-	if(func) {
-		func()
-	}
+	MESSAGE.getThen(message, (func) => func())
 })
 
 function startGame() {
-	showStartForm()
+	PLAYER_MAP.valuesEach(player => showStartForm(player))
 }

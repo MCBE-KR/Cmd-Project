@@ -20,6 +20,6 @@ skill.fail.invalid_target=§cInvalid target to use skill
 form.set_global=Form has been created. For players who do not see the form, please use the "§lCheck Form§r§f" item.
 form.unavailable=There's no created form
 
-form.text.select_team=Select your team
+form.title.select_team=Select a team for the players.
 form.text.team.blue=Blue Team
 form.text.team.red=Red Team

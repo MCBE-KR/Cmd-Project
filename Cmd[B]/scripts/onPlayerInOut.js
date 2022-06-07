@@ -1,6 +1,6 @@
 import { world } from "mojang-minecraft";
-import { PLAYER_MAP, runWorldCommand } from "./api";
-import { addTriableTask } from "./onTickApi";
+import { PLAYER_MAP, runWorldCommand } from "./Api";
+import { addTriableTask } from "./OnTickApi";
 
 let requiresInit = true
 

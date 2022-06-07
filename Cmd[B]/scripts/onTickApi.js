@@ -1,5 +1,7 @@
-export const queue = new Map()
-export const triableQueue = new Map()
+import { HashMap } from "./HashMap"
+
+export const queue = new HashMap()
+export const triableQueue = new HashMap()
 
 export let currentTick = 0
 
@@ -34,10 +36,7 @@ export function addTask(delay, task) {
 	}
 
 	const tick = currentTick + delay
-	const taskList = queue.get(tick) || []
-
-	taskList.push(task)
-	queue.set(tick, taskList)
+	queue.push(tick, task)
 }
 
 export function addTriableTask(tryRate, maxTryCount, task, runImmediately) {
@@ -59,8 +58,5 @@ export function addFailedTriableTask(triableTask) {
 	}
 
 	const tick = currentTick + triableTask.tryRate
-	const taskList = triableQueue.get(tick) || []
-
-	taskList.push(triableTask)
-	triableQueue.set(tick, taskList)
+	triableQueue.push(tick, triableTask)
 }

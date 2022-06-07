@@ -1,12 +1,13 @@
 import { world, EntityRaycastOptions } from "mojang-minecraft"
-import * as Api from "./api.js"
-import { SaveKey, ScoreChain } from "./api.js"
-import { LineData } from "./object.js"
-import { addTask } from "./onTickApi"
+import * as Api from "./Api.js"
+import { SaveKey, ScoreChain } from "./Api.js"
+import { HashMap } from "./HashMap.js"
+import { LineData } from "./Object.js"
+import { addTask } from "./OnTickApi"
 
 const OVERWORLD = world.getDimension("overworld")
 
-const ENTITY_CREATE = new Map()
+const ENTITY_CREATE = new HashMap()
 ENTITY_CREATE.set("cmd:check_mana", checkManaXp)
 ENTITY_CREATE.set("cmd:scan_hit", getHitScan)
 ENTITY_CREATE.set("cmd:save_line", saveLine)
@@ -23,10 +24,7 @@ world.events.entityCreate.subscribe(event => {
     const entity = event.entity
 	const entityId = entity.id
 
-	const func = ENTITY_CREATE.get(entityId)
-	if(func) {
-		func()
-	}
+	ENTITY_CREATE.getThen(entityId, (func) => func())
 })
 
 function parseCustomRegex(params, startIdx, endStr, concat = "_") {
@@ -366,13 +364,7 @@ function addRider() {
 				Api.runCommand(player, `ride @e[type=${identifier}, tag=!rider] start_riding @s teleport_rider`)
 				rider.addTag("rider")
 
-				let riderList = Api.RIDER.get(player.name)
-				if(!riderList) {
-					riderList = []
-					Api.RIDER.set(player.name, riderList)
-				}
-				
-				riderList.push(rider)
+				Api.RIDER.push(player.name, rider)
 			})
 	}
 }
@@ -381,7 +373,7 @@ function getRider() {
 	const players = getExecutors()
 
 	for(const player of players) {
-		const riderList = Api.RIDER.get(player.name) || []
+		const riderList = Api.RIDER.getOrReturn(player.name, () => [])
 		
 		player.getTags()
 			.filter(tag => tag.startsWith("rider_"))
@@ -399,7 +391,7 @@ function removeRider() {
 	const players = getExecutors()
 
 	for(const player of players) {
-		const riderList = Api.RIDER.get(player.name) || []
+		const riderList = Api.RIDER.getOrReturn(player.name, () => [])
 		const identifiers = player.getTags()
 			.filter(tag => tag.startsWith("rider_"))
 			.map(tag => {
@@ -410,7 +402,7 @@ function removeRider() {
 		Api.removeAll(riderList, identifiers, rider => rider.id)
 			.forEach(removedRider => {
 				const identifier = removedRider.id
-				const despawnTime = Api.DESPAWN_TICK.get(identifier) || 0
+				const despawnTime = Api.DESPAWN_TICK.getOrReturn(identifier, () => 0)
 
 				addTask(despawnTime, () => Api.runWorldCommand(`event entity @e[type=${identifier}] cmd:despawn`))
 

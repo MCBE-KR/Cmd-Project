@@ -1,4 +1,5 @@
 import { EntityQueryOptions, world } from "mojang-minecraft";
+import { HashMap } from "./HashMap";
 
 const OVERWORLD = world.getDimension("overworld")
 
@@ -6,14 +7,14 @@ export class SaveKey {
     static LINE = "line"
 }
 
-export const PLAYER_MAP = new Map()
-export const SAVED = new Map()
-export const RIDER = new Map()
+export const PLAYER_MAP = new HashMap()
+export const SAVED = new HashMap()
+export const RIDER = new HashMap()
 
-export const DESPAWN_TICK = new Map()
+export const DESPAWN_TICK = new HashMap()
 DESPAWN_TICK.set("cmd:shield", 10)
 
-export const BUFF_DES = new Map()
+export const BUFF_DES = new HashMap()
 export const BUFF_LIST = []
 
 function addEffect(scoreboard, des, hasLv, isDebuff) {
@@ -48,7 +49,7 @@ export class ScoreChain {
 
     constructor() {
         this.status = ScoreChain.SUCCESS
-        this.variableMap = new Map()
+        this.variableMap = new HashMap()
     }
 
     setFailed() {
@@ -75,29 +76,29 @@ export class ScoreChain {
         return this
     }
 
-    execute(lambda) {
+    execute(callback) {
         if(this.status === ScoreChain.SUCCESS) {
-            lambda(this.variableMap)
+            callback(this.variableMap)
         }
 
         return this.status
     }
 
-    getParamsIf(player, maxParamIndex, lambda) {
+    getParamsIf(player, maxParamIndex, callback) {
         for (let i = 1; i <= maxParamIndex; i++) {
             this.getScoreIf(player, `param${i}`)
         }
 
-        this.execute(lambda)
+        this.execute(callback)
         return this.status
     }
 }
 
-export function getScoreIf(player, objective, lambda) {
+export function getScoreIf(player, objective, callback) {
     let score = getScore(player, objective)
 
     if(score) {
-        lambda(score)
+        callback(score)
     }
 }
 
