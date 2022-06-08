@@ -3,7 +3,7 @@ import * as Api from "./Api.js"
 import { SaveKey, ScoreChain } from "./Api.js"
 import { HashMap } from "./HashMap.js"
 import { LineData } from "./Object.js"
-import { addTask } from "./OnTickApi"
+import { addTask } from "./TickApi"
 
 const OVERWORLD = world.getDimension("overworld")
 

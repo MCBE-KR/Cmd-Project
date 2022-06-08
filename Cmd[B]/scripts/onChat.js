@@ -1,5 +1,5 @@
 import { world } from "mojang-minecraft";
-import { PLAYER_MAP } from "./Api";
+import { loopPlayers, runCommand } from "./Api";
 import { showStartForm } from "./Form";
 import { HashMap } from "./HashMap";
 
@@ -8,7 +8,7 @@ const PREFIX = "="
 const MESSAGE = new HashMap()
 
 const OP_MESSAGE = new HashMap()
-OP_MESSAGE.set("start", startGame)
+OP_MESSAGE.set("team", selectTeam)
 
 world.events.beforeChat.subscribe(event => {
 	const sender = event.sender
@@ -30,9 +30,13 @@ world.events.beforeChat.subscribe(event => {
 		}
 	}
 
-	MESSAGE.getThen(message, (func) => func())
+	MESSAGE.getAnd(
+		message,
+		(func) => func(),
+		() => runCommand(sender, `tellraw @s {"rawtext": [{"text": "Failed to execute command"}]}`)
+	)
 })
 
-function startGame() {
-	PLAYER_MAP.valuesEach(player => showStartForm(player))
+function selectTeam() {
+	loopPlayers(player => showStartForm(player))
 }

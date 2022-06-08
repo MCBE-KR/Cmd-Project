@@ -7,7 +7,25 @@ export class SaveKey {
     static LINE = "line"
 }
 
-export const PLAYER_MAP = new HashMap()
+export const Test = new HashMap()
+
+/**
+ * @param callback 각 player들을 인자로 받아 실행하는 함수
+ */
+export function loopPlayers(callback) {
+    for(const player of world.getPlayers()) {
+        callback(player)
+    }
+}
+
+export function findPlayer(playerName) {
+    for(const player of world.getPlayers()) {
+        if(player.name === playerName) {
+            return player
+        }
+    }
+}
+
 export const SAVED = new HashMap()
 export const RIDER = new HashMap()
 

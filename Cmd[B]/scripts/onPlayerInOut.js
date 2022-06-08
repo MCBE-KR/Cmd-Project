@@ -1,12 +1,12 @@
 import { world } from "mojang-minecraft";
-import { PLAYER_MAP, runWorldCommand } from "./Api";
-import { addTriableTask } from "./OnTickApi";
+import { runWorldCommand } from "./Api";
+import { canceledPlayers, nonResponsePlayers, onEmpties } from "./Form";
+import { addTriableTask } from "./TickApi";
 
 let requiresInit = true
 
 world.events.playerJoin.subscribe(event => {
 	const player = event.player
-	PLAYER_MAP.set(player.name, player)
 
 	addTriableTask(10, -1, () => {
 		if(requiresInit) {
@@ -23,5 +23,33 @@ world.events.playerJoin.subscribe(event => {
 
 world.events.playerLeave.subscribe(event => {
 	const playerName = event.playerName
-	PLAYER_MAP.delete(playerName)
+
+	let checkKeys = []
+	nonResponsePlayers.forEach((players, key) => {
+		if(players.indexOf(playerName) !== -1) {
+			checkKeys.push(key)
+		}
+	})
+	checkKeys.forEach(key => {
+		nonResponsePlayers.reduce(key, playerName)
+
+		if(canceledPlayers.isEmpty() && nonResponsePlayers.isEmpty()) {
+			onEmpties.get(key)()
+		}
+	})
+
+	checkKeys = []
+	canceledPlayers.forEach((players, key) => {
+		if(players.indexOf(playerName) !== -1) {
+			checkKeys.push(key)
+		}
+	})
+	checkKeys.forEach(key => {
+		canceledPlayers.reduce(key, playerName)
+
+		if(canceledPlayers.isEmpty() && nonResponsePlayers.isEmpty()) {
+			onEmpties.get(key)()
+		}
+	})
+
 })

@@ -1,8 +1,8 @@
 import { world } from "mojang-minecraft"
-import { BUFF_DES, BUFF_LIST, checkManaXp, getScore, PLAYER_MAP, runFunction, ScoreChain, setScore } from "./Api"
-import { canceledPlayers, forms, nonResponsePlayers, setCurrentPlayer, showForm } from "./Form"
+import { BUFF_DES, BUFF_LIST, checkManaXp, findPlayer, getScore, loopPlayers, runFunction, ScoreChain, setScore } from "./Api"
+import { canceledPlayers, nonResponsePlayers, setCurrentPlayerName, showForm } from "./Form"
 import { isStarted } from "./Game"
-import { queue, triableQueue, currentTick, addFailedTriableTask, increaseTick } from "./OnTickApi"
+import { queue, triableQueue, currentTick, addFailedTriableTask, increaseTick } from "./TickApi"
 
 const OVERWORLD = world.getDimension("overworld")
 
@@ -82,7 +82,7 @@ function reduceCool(player) {
 }
 
 function onPlayerTick() {
-	PLAYER_MAP.valuesEach(player => {
+	loopPlayers(player => {
 		const shield = getScore(player, "shield") || 0
 		if(shield > 0) {
 			player.runCommand("function buff/shield")
@@ -94,7 +94,7 @@ function onPlayerTick() {
 }
 
 function regenStat() {
-	PLAYER_MAP.valuesEach(player => {
+	loopPlayers(player => {
 		player.runCommand(`scoreboard players operation @s hp += @s hp_regen`)
 		player.runCommand(`scoreboard players operation @s mana += @s mana_regen`)
 		runFunction(player, "setting/revalidate_stat")
@@ -112,11 +112,7 @@ function reduceProjectileLife() {
 world.events.tick.subscribe(() => {
 	increaseTick()
 
-	let taskList = queue.get(currentTick)
-	if(taskList instanceof Array) {
-		taskList.forEach(task => task())
-	}
-
+	let taskList = queue.getThen(currentTick, taskList => taskList.forEach(task => task()))
 	queue.delete(currentTick)
 
 	let failedList = []
@@ -134,18 +130,24 @@ world.events.tick.subscribe(() => {
 	failedList.forEach(triableTask => addFailedTriableTask(triableTask))
 
 	if(currentTick % 10 === 0) {
-		canceledPlayers.forEach((players, title) => {
-			for(const player of players) {
-				setCurrentPlayer(player)
+		console.warn(canceledPlayers.toString() + " " + nonResponsePlayers.toString())
+
+		canceledPlayers.forEach((playerNames, title) => {
+			playerNames.forEach(playerName => {
+				const player = findPlayer(playerName)
+
+				setCurrentPlayerName(playerName)
 				showForm(title, player)
-			}
+			})
 		})
 
 		nonResponsePlayers.forEach((players, title) => {
-			for(const player of players) {
-				setCurrentPlayer(player)
+			players.forEach(player => {
+				console.warn(player.name)
+
+				setCurrentPlayerName(player)
 				showForm(title, player)
-			}
+			})
 		})
 	}
 

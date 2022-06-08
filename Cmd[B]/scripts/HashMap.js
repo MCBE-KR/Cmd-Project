@@ -1,3 +1,5 @@
+import { world } from "mojang-minecraft"
+
 export class HashMap extends Map {
 	static KEY_CALLBACK = (key) => String(key)
 	static VALUE_CALLBACK = (value) => String(value)
@@ -68,29 +70,25 @@ export class HashMap extends Map {
 			or()
 		}
 
+		world.getPlayers
 		return result
 	}
 
 	/**
-	 * key에 상응하는 값이 배열일 시 사용 가능
-	 * @param value key에 상응하는 배열이 존재할 시 배열에 추가하고, 존재하지 않을 시 배열을 생성하여 key로 저장하고 배열에 추가
+	 * @param value key에 상응하는 배열이 존재할 시 Set에 추가하고, 존재하지 않을 시 배열을 생성하여 key로 저장하고 배열에 추가
+	 * @see Set
 	 */
 	push(key, value) {
-		const result = this.get(key) || []
+		const result = this.get(key) || new Set()
 		if(!result.length) {
 			this.set(key, result)
 		}
 
-		if(result.indexOf(value) !== -1) {
-			return
-		}
-
-		result.push(value)
-		return result
+		result.add(value)
+		return result 
 	}
 
 	/**
-	 * key에 상응하는 값이 배열일 시 사용 가능
 	 * @param value key에 상응하는 배열에서 제거할 객체
 	 */
 	reduce(key, value) {
@@ -113,12 +111,25 @@ export class HashMap extends Map {
 		return this.get(key) !== null
 	}
 
+	isEmpty() {
+		return this.size === 0
+	}
+
 	/**
 	 * @param callback 각각의 value를 인자로 받아 실행하는 함수
 	 */
 	valuesEach(callback) {
 		for(const value of this.values()) {
 			callback(value)
+		}
+	}
+
+	/**
+	 * @param callback 각각의 key를 인자로 받아 실행하는 함수
+	 */
+	keysEach(callback) {
+		for(const key of this.keys()) {
+			callback(key)
 		}
 	}
 
