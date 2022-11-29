@@ -1,7 +1,7 @@
 import { world } from "mojang-minecraft";
-import { loopPlayers, runCommand } from "./Api";
-import { showStartForm } from "./Form";
-import { HashMap } from "./HashMap";
+import { loopPlayers, runCommand } from "./api.js";
+import { showStartForm } from "./form.js";
+import { HashMap } from "./hashMap.js";
 
 const PREFIX = "="
 

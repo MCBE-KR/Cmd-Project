@@ -1,7 +1,7 @@
 import { world } from "mojang-minecraft";
-import { runWorldCommand } from "./Api";
-import { canceledPlayers, nonResponsePlayers, onEmpties } from "./Form";
-import { addTriableTask } from "./TickApi";
+import { runWorldCommand } from "./api.js";
+import { canceledPlayers, nonResponsePlayers, onEmpties } from "./form.js";
+import { addTriableTask } from "./tickApi.js";
 
 let requiresInit = true
 

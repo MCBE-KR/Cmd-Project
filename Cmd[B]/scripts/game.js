@@ -1,4 +1,4 @@
-export let isStarted = false
+export let isStarted = true
 
 export function setIsStarted(value) {
 	isStarted = value

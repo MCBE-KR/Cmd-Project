@@ -1,6 +1,6 @@
 import { ActionFormData } from "mojang-minecraft-ui"
-import { findPlayer, getScore, getTagPlayers, loopPlayers, runCommand } from "./Api"
-import { HashMap } from "./HashMap"
+import { findPlayer, getScore, getTagPlayers, loopPlayers, runCommand } from "./api.js"
+import { HashMap } from "./hashMap.js"
 
 const TITLE = {
 	SELECT_TEAM: "form.title.select_team",

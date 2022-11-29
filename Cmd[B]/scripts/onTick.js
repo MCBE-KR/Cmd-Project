@@ -1,8 +1,8 @@
 import { world } from "mojang-minecraft"
-import { BUFF_DES, BUFF_LIST, checkManaXp, findPlayer, getScore, loopPlayers, runFunction, ScoreChain, setScore } from "./Api"
-import { canceledPlayers, nonResponsePlayers, setCurrentPlayerName, showForm } from "./Form"
-import { isStarted } from "./Game"
-import { queue, triableQueue, currentTick, addFailedTriableTask, increaseTick } from "./TickApi"
+import { BUFF_DES, BUFF_LIST, checkManaXp, findPlayer, getScore, loopPlayers, runFunction, ScoreChain, setScore } from "./api.js"
+import { canceledPlayers, nonResponsePlayers, setCurrentPlayerName, showForm } from "./form.js"
+import { isStarted } from "./game.js"
+import { queue, triableQueue, currentTick, addFailedTriableTask, increaseTick } from "./tickApi.js"
 
 const OVERWORLD = world.getDimension("overworld")
 
@@ -130,8 +130,6 @@ world.events.tick.subscribe(() => {
 	failedList.forEach(triableTask => addFailedTriableTask(triableTask))
 
 	if(currentTick % 10 === 0) {
-		console.warn(canceledPlayers.toString() + " " + nonResponsePlayers.toString())
-
 		canceledPlayers.forEach((playerNames, title) => {
 			playerNames.forEach(playerName => {
 				const player = findPlayer(playerName)
@@ -143,8 +141,6 @@ world.events.tick.subscribe(() => {
 
 		nonResponsePlayers.forEach((players, title) => {
 			players.forEach(player => {
-				console.warn(player.name)
-
 				setCurrentPlayerName(player)
 				showForm(title, player)
 			})

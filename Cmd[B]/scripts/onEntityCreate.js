@@ -1,9 +1,9 @@
 import { world, EntityRaycastOptions } from "mojang-minecraft"
-import * as Api from "./Api.js"
-import { SaveKey, ScoreChain } from "./Api.js"
-import { HashMap } from "./HashMap.js"
-import { LineData } from "./Object.js"
-import { addTask } from "./TickApi"
+import * as Api from "./api.js"
+import { SaveKey, ScoreChain } from "./api.js"
+import { HashMap } from "./hashMap.js"
+import { LineData } from "./object.js"
+import { addTask } from "./tickApi.js"
 
 const OVERWORLD = world.getDimension("overworld")
 

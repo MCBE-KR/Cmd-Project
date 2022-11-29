@@ -1,4 +1,4 @@
-import "./OnEntityCreate.js"
-import "./OnTick.js"
-import "./OnPlayerInOut.js"
-import "./OnChat.js"
+import "./onEntityCreate.js"
+import "./onTick.js"
+import "./onPlayerInOut.js"
+import "./onChat.js"

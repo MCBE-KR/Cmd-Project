@@ -1,4 +1,4 @@
-import { HashMap } from "./HashMap"
+import { HashMap } from "./hashMap.js"
 
 export const queue = new HashMap()
 export const triableQueue = new HashMap()

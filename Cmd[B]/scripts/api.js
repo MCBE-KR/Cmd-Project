@@ -1,5 +1,5 @@
 import { EntityQueryOptions, world } from "mojang-minecraft";
-import { HashMap } from "./HashMap";
+import { HashMap } from "./hashMap.js";
 
 const OVERWORLD = world.getDimension("overworld")
 

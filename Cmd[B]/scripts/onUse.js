@@ -1,6 +1,6 @@
 import { world } from "mojang-minecraft";
-import { runCommand } from "./api";
-import { globalForm, globalThen } from "./form";
+import { runCommand } from "./api.js";
+import { globalForm, globalThen } from "./form.js";
 
 const ITEM_USE_MAP = new Map()
 ITEM_USE_MAP.set("cmd:check_form", checkForm)
